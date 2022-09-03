@@ -1,0 +1,6 @@
+package org.kodluyoruz.mybank.model;
+
+public class Transfer {
+
+
+}
