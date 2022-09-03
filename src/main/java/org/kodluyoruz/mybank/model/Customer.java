@@ -1,9 +1,11 @@
 package org.kodluyoruz.mybank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.Set;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,11 +16,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "customer")
 public class Customer {
 
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(unique = true,name = "tc_no")
+    private String tckn;
 
     @Column(nullable = false, length = 100)
     private String name;
@@ -30,9 +36,6 @@ public class Customer {
     private String emailAddress;
 
 
-    @Column(name = "customer_Number", unique = true)
-    private int customerNumber;
-
     @Column(name = "birth_Date")
     private LocalDate birthDate;
 
@@ -40,6 +43,16 @@ public class Customer {
     private LocalDate membershipDate;
 
     @OneToMany(mappedBy = "customer")
-    private List<Account> accounts;
+    private Set<Account> accounts;
+
+    @Column(unique = true)
+    private String phoneNumber;
+
+    @OneToOne(mappedBy = "customer")
+    private BankCard bankCard;
+
+    /*@JsonIgnore
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
+    private Set<CreditCard> creditCards;*/
 
 }

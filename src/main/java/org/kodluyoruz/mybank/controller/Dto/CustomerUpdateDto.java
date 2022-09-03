@@ -23,7 +23,6 @@ public class CustomerUpdateDto {
                 .name(this.name)
                 .surname(this.surname)
                 .emailAddress(this.emailAddress)
-                .customerNumber(this.customerNumber)
                 .birthDate(this.birthDate)
                 .build();
     }

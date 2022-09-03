@@ -32,6 +32,11 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
+    public Optional<Customer> getCustomer(Long id){
+        return customerRepository.findById(id);
+
+    }
+
   /*  public Optional<Customer> update(Long customer_id){
         return customerRepository.findById(customer_id);
     }*/

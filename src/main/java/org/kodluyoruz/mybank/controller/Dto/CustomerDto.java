@@ -2,10 +2,6 @@ package org.kodluyoruz.mybank.controller.Dto;
 
 import lombok.Builder;
 import lombok.Data;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Data
@@ -17,7 +13,8 @@ public class CustomerDto {
     private String name;
     private String surname;
     private String emailAddress;
-    private int customerNumber;
+    private String tckn;
+    private String phoneNumber;
     private LocalDate birthDate;
     private LocalDate membershipDate;
 

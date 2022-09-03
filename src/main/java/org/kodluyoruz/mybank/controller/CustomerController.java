@@ -30,7 +30,7 @@ public class CustomerController {
                 .surname(customer.getSurname())
                 .emailAddress(customer.getEmailAddress())
                 .birthDate(customer.getBirthDate())
-                .customerNumber(customer.getCustomerNumber())
+
                 .membershipDate(customer.getMembershipDate())
                 .build();
     }
@@ -49,7 +49,6 @@ public class CustomerController {
                         .name(customer.getName())
                         .surname(customer.getSurname())
                         .emailAddress(customer.getEmailAddress())
-                        .customerNumber(customer.getCustomerNumber())
                         .birthDate(customer.getBirthDate())
                         .membershipDate(customer.getMembershipDate())
                         .build());
@@ -66,8 +65,21 @@ public class CustomerController {
                 .surname(customer.getSurname())
                 .emailAddress(customer.getEmailAddress())
                 .birthDate(customer.getBirthDate())
-                .customerNumber(dto.getCustomerNumber())
                 .build();
+    }
+
+    @GetMapping("customer/{id}")
+    public Optional<CustomerDto> getCustomerById(@PathVariable Long id){
+        return customerService.getCustomer(id)
+                .map(customer -> CustomerDto.builder()
+                        .id(customer.getId())
+                        .name(customer.getName())
+                        .surname(customer.getSurname())
+                        .emailAddress(customer.getEmailAddress())
+                        .birthDate(customer.getBirthDate())
+                        .membershipDate(customer.getMembershipDate())
+                        .build());
+
     }
 
     /*@PutMapping("customer")

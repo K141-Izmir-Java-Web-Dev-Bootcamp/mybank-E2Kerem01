@@ -11,8 +11,9 @@ public class CustomerCreatDto {
     private String name;
     private String surname;
     private String emailAddress;
-    private int customerNumber;
     private LocalDate birthDate;
+    private String tckn;
+    private String phoneNumber;
     private LocalDate membershipDate;
 
 
@@ -22,7 +23,8 @@ public class CustomerCreatDto {
                 .surname(this.surname)
                 .birthDate(this.birthDate)
                 .emailAddress(this.emailAddress)
-                .customerNumber(this.customerNumber)
+                .phoneNumber(this.phoneNumber)
+                .tckn(this.tckn)
                 .membershipDate(this.membershipDate)
                 .build();
     }

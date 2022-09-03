@@ -23,9 +23,9 @@ public class AccountController {
     }
 
 
-    @PostMapping("account")
+    /*@PostMapping("account")
     public AccountDto creat(@RequestBody AccountCreatDto dto){
         Account account = customerService.getPagesOfCustomer(dto.);
 
-    }
+    }*/
 }
