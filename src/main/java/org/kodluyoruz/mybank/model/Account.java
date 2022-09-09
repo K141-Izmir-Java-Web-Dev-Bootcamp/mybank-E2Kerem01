@@ -5,8 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.kodluyoruz.mybank.controller.dto.account.AccountDto;
+import org.kodluyoruz.mybank.utilities.money.type.MoneyType;
+import org.kodluyoruz.mybank.utilities.type.of.account.AccountType;
 
 import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -20,26 +24,39 @@ public class Account {
 
     @Id
     @GeneratedValue
-    private Long account_id;
+    private Long accountId;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id",referencedColumnName = "id")
+    @Column(name = "amount_of_money")
+    private int balance;
+
+    @Enumerated(value = EnumType.STRING)
+    private AccountType accountType;
+
+    @Enumerated(value = EnumType.STRING)
+    private MoneyType moneyType;
+
+    @Column(unique = true,name = "iban_number")
+    private UUID iban;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customers_id",referencedColumnName = "customerId")
     private Customer customer;
 
     @OneToOne(mappedBy = "account")
     public BankCard bankCard;
 
+    @OneToMany(mappedBy = "account")
+    public Set<CreditCard> creditCard;
 
-    @Column(name = "account_type")
-    private int account_type;
+    public AccountDto toAccountDto() {
+        return AccountDto.builder()
+                .accountId(this.accountId)
+                .iban(this.iban)
+                .balance(this.balance)
+                .accountType(this.accountType)
+                .moneyType(this.moneyType)
+                .build();
+    }
 
-    @Column(unique = true,name = "iban_number")
-    private UUID iban;
-
-
-
-   /* @OneToOne(mappedBy = "account",cascade = CascadeType.REMOVE)
-    private DebitCard debitCard;*/
 
 
 

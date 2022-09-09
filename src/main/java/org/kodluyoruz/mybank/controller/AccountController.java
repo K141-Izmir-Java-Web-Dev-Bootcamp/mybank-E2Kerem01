@@ -1,14 +1,17 @@
 package org.kodluyoruz.mybank.controller;
-
-import org.kodluyoruz.mybank.controller.Dto.AccountCreatDto;
-import org.kodluyoruz.mybank.controller.Dto.AccountDto;
+import org.kodluyoruz.mybank.controller.dto.account.AccountCreateDto;
+import org.kodluyoruz.mybank.controller.dto.account.AccountDto;
 import org.kodluyoruz.mybank.model.Account;
 import org.kodluyoruz.mybank.service.AccountService;
 import org.kodluyoruz.mybank.service.CustomerService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -23,9 +26,63 @@ public class AccountController {
     }
 
 
-    /*@PostMapping("account")
-    public AccountDto creat(@RequestBody AccountCreatDto dto){
-        Account account = customerService.getPagesOfCustomer(dto.);
+    @PostMapping("account")
+    @ResponseStatus(HttpStatus.CREATED)
+    public AccountDto create(@RequestBody AccountCreateDto accountCreateDto) {
+        Account account = accountService.create(accountCreateDto.toAccount());
+        return AccountDto.builder()
+                .accountId(account.getAccountId())
+                .balance(account.getBalance())
+                .accountType(account.getAccountType())
+                .moneyType(account.getMoneyType())
+                .iban(account.getIban())
+                .build();
+    }
 
-    }*/
+    @DeleteMapping("account/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteAccount(@PathVariable Long id){
+        try {
+            accountService.deleteAccount(id);
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not fount");
+        }
+
+
+    }
+
+    @GetMapping("accounts")
+    public Page<AccountDto> listAccounts(Pageable pageable){
+        return accountService.getPagesOfAccount(pageable)
+                .map(account -> AccountDto.builder()
+                        .accountId(account.getAccountId())
+                        .accountType(account.getAccountType())
+                        .balance(account.getBalance())
+                        .iban(account.getIban())
+                        .moneyType(account.getMoneyType())
+                        //.customer(account.getCustomer().toCustomerDto())
+                        .build());
+    }
+
+    @GetMapping("acccount/{id}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public Optional<AccountDto> getAccountById(@PathVariable Long id){
+        try {
+            return accountService.getAccount(id)
+                    .map(account -> AccountDto.builder()
+                            .accountId(account.getAccountId())
+                            .accountType(account.getAccountType())
+                            .balance(account.getBalance())
+                            .iban(account.getIban())
+                            .moneyType(account.getMoneyType())
+                            //.customer(account.getCustomer().toCustomerDto())
+                            .build());
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not fount");
+        }
+
+    }
+
+
+
 }

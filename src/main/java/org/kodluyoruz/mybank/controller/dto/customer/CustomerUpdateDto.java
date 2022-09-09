@@ -1,4 +1,4 @@
-package org.kodluyoruz.mybank.controller.Dto;
+package org.kodluyoruz.mybank.controller.dto.customer;
 
 import lombok.Getter;
 import lombok.Setter;

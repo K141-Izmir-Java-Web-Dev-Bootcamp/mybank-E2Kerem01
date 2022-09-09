@@ -1,32 +1,37 @@
-package org.kodluyoruz.mybank.controller.Dto;
+package org.kodluyoruz.mybank.controller.dto.customer;
 
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 import org.kodluyoruz.mybank.model.Customer;
+
 import java.time.LocalDate;
 
+@Data
+@Builder
+public class CustomerDto {
 
-@Setter
-public class CustomerCreatDto {
 
+    private Long customerId;
     private String name;
     private String surname;
     private String emailAddress;
-    private LocalDate birthDate;
     private String tckn;
     private String phoneNumber;
+    private LocalDate birthDate;
     private LocalDate membershipDate;
 
-
-    public Customer toCustomer(){
+    public Customer toCustomer() {
         return Customer.builder()
-                .name(this.name)
-                .surname(this.surname)
-                .birthDate(this.birthDate)
-                .emailAddress(this.emailAddress)
-                .phoneNumber(this.phoneNumber)
+                .customerId(this.customerId)
                 .tckn(this.tckn)
+                .name(this.name)
+                .emailAddress(this.emailAddress)
+                .birthDate(this.birthDate)
                 .membershipDate(this.membershipDate)
+                .surname(this.surname)
+                .phoneNumber(this.phoneNumber)
                 .build();
     }
+
 
 }

@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.kodluyoruz.mybank.controller.dto.bankcard.BankCardDto;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Data
 @Builder
@@ -18,21 +18,29 @@ public class BankCard {
 
     @Id
     @GeneratedValue
-    private int bankCard_id;
+    @Column(name = "bankcard_number", nullable = false)
+    private Long bankCardId;
 
-    @OneToOne
-    @JoinColumn(name = "bankcard_customer_id", referencedColumnName = "id")
-    private Customer customer;
-
-
-    @OneToOne
-    @JoinColumn(name = "bankcard_account_id", referencedColumnName = "account_id")
-    private Account account;
-
+    @Column(name = "bankCard_limit")
     private int bankCardLimit;
 
+    @Column(name = "bankCard_password")
     private String bankCardPassword;
+    @Column(name = "bankCard_Ccv")
+    private String bankCardCcv;
 
-    private String ccv;
+    @OneToOne
+    @JoinColumn(name = "bankcard_account_id", referencedColumnName = "accountId")
+    private Account account;
+
+    private BankCardDto toBankCardDto(){
+        return  BankCardDto.builder()
+                .bankCardId(this.bankCardId)
+                .bankCardLimit(this.bankCardLimit)
+                .bankCardPassword(this.bankCardPassword)
+                .bankCardCcv(this.bankCardCcv)
+                .build();
+
+    }
 
 }

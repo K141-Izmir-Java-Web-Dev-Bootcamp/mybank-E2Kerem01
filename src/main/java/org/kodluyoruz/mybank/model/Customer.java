@@ -1,15 +1,15 @@
 package org.kodluyoruz.mybank.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.kodluyoruz.mybank.controller.dto.customer.CustomerDto;
+
 import java.util.Set;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @Builder
@@ -21,7 +21,7 @@ public class Customer {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long customerId;
 
     @Column(unique = true,name = "tc_no")
     private String tckn;
@@ -42,17 +42,25 @@ public class Customer {
     @Column(name = "membership_Date")
     private LocalDate membershipDate;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @OneToMany(mappedBy = "customer")
     private Set<Account> accounts;
 
-    @Column(unique = true)
-    private String phoneNumber;
+    public CustomerDto toCustomerDto() {
+        return CustomerDto.builder()
+                .customerId(this.customerId)
+                .tckn(this.tckn)
+                .surname(this.surname)
+                .emailAddress(this.emailAddress)
+                .name(this.name)
+                .phoneNumber(this.phoneNumber)
+                .birthDate(this.birthDate)
+                .membershipDate(this.membershipDate)
+                .build();
+    }
 
-    @OneToOne(mappedBy = "customer")
-    private BankCard bankCard;
 
-    /*@JsonIgnore
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
-    private Set<CreditCard> creditCards;*/
 
 }
