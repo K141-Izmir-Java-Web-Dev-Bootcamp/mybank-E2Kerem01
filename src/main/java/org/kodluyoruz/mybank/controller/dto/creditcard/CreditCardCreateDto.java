@@ -14,14 +14,14 @@ public class CreditCardCreateDto {
 
     private String creditCardPassword;
 
-    private String creditCcv;
+    private String creditCardCvc;
 
 
     public CreditCard toCreditCard(){
         return CreditCard.builder()
                 .creditCardLimit(this.creditCardLimit)
-                .CreditCardPassword(this.creditCardPassword)
-                .creditCcv(this.creditCcv)
+                .creditCardPassword(this.creditCardPassword)
+                .creditCardCvc(this.creditCardCvc)
                 .account(this.account.toAccount())
                 .build();
     }

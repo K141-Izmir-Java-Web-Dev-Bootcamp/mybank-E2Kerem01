@@ -16,7 +16,7 @@ import java.util.UUID;
 public class AccountDto {
 
     private Long accountId;
-    private int balance;
+    private double balance;
     private UUID iban;
     private AccountType accountType;
     private MoneyType moneyType;

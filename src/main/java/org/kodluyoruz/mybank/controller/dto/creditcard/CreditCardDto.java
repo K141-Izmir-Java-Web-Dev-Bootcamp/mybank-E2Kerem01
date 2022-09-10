@@ -9,22 +9,23 @@ import org.kodluyoruz.mybank.model.CreditCard;
 @Builder
 public class CreditCardDto {
 
-    private Long creditCard_id;
+    private Long creditCardId;
 
     private double creditCardLimit;
-
+    private double amountOfDebt;
     private String creditCardPassword;
 
-    private String creditCcv;
+    private String creditCardCvc;
 
     private AccountDto account;
 
     public CreditCard toCreditCard(){
         return CreditCard.builder()
-                .creditCard_id(this.creditCard_id)
+                .amountOfDebt(this.amountOfDebt)
+                .creditCardId(this.creditCardId)
                 .creditCardLimit(this.creditCardLimit)
-                .CreditCardPassword(this.creditCardPassword)
-                .creditCcv(this.creditCcv)
+                .creditCardPassword(this.creditCardPassword)
+                .creditCardCvc(this.creditCardCvc)
                 .account(this.account.toAccount())
                 .build();
     }

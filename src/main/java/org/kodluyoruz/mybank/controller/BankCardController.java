@@ -32,9 +32,25 @@ public class BankCardController {
                 .bankCardId(bankCard.getBankCardId())
                 .bankCardLimit(bankCard.getBankCardLimit())
                 .bankCardPassword(bankCard.getBankCardPassword())
-                .bankCardCcv(bankCard.getBankCardCcv())
+                .bankCardCvc(bankCard.getBankCardCvc())
                 .build();
     }
+
+    @PostMapping("withdrawMoneyFromAtm/{bankCardId}/{bankCardPassword}/{amount}")
+    public void withdrawMoneyFromAtm(@PathVariable Long bankCardId,@PathVariable String bankCardPassword,@PathVariable double amount){
+        bankCardService.withdrawMoneyFromAtm(bankCardId,bankCardPassword,amount);
+    }
+
+    @PostMapping("depositMoneyAtAtm/{bankCardId}/{bankCardPassword}/{amount}")
+    public void depositMoneyAtAtm(@PathVariable Long bankCardId,@PathVariable String bankCardPassword,@PathVariable double amount){
+        bankCardService.depositMoneyAtAtm(bankCardId,bankCardPassword,amount);
+    }
+
+    @PostMapping("onlineShoppingProcess/{bankCardId}/{bankCardPassword}/{bankCardCvc}/{amount}")
+    public void onlineShoppingProcess(@PathVariable Long bankCardId,@PathVariable String bankCardPassword,@PathVariable String bankCardCvc,@PathVariable double amount){
+        bankCardService.onlineShoppingProcess(bankCardId,bankCardPassword,bankCardCvc,amount);
+    }
+
 
     @DeleteMapping("bankcard/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -53,13 +69,13 @@ public class BankCardController {
                         .bankCardId(bankCard.getBankCardId())
                         .bankCardLimit(bankCard.getBankCardLimit())
                         .bankCardPassword(bankCard.getBankCardPassword())
-                        .bankCardCcv(bankCard.getBankCardCcv())
+                        .bankCardCvc(bankCard.getBankCardCvc())
                         .build());
     }
 
 
     @GetMapping("bankcard/{id}")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public Optional<BankCardDto> getBankCardId(@PathVariable Long id){
         try {
             return bankCardService.getBankCard(id)
@@ -67,10 +83,10 @@ public class BankCardController {
                             .bankCardId(bankCard.getBankCardId())
                             .bankCardLimit(bankCard.getBankCardLimit())
                             .bankCardPassword(bankCard.getBankCardPassword())
-                            .bankCardCcv(bankCard.getBankCardCcv())
+                            .bankCardCvc(bankCard.getBankCardCvc())
                             .build());
         }catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not fount");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bank card not fount");
         }
 
     }

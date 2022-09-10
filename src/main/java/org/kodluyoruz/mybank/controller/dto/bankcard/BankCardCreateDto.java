@@ -12,13 +12,13 @@ public class BankCardCreateDto {
     private AccountDto account;
     private int bankCardLimit;
     private String bankCardPassword;
-    private String bankCardCcv;
+    private String bankCardCvc;
 
     public BankCard toBankCard(){
         return BankCard.builder()
                 .bankCardLimit(this.bankCardLimit)
                 .bankCardPassword(this.bankCardPassword)
-                .bankCardCcv(this.bankCardCcv)
+                .bankCardCvc(this.bankCardCvc)
                 .account(this.account.toAccount())
                 .build();
     }

@@ -15,16 +15,16 @@ public class BankCardDto {
 
 
     private Long bankCardId;
-    private int bankCardLimit;
+    private double bankCardLimit;
     private String bankCardPassword;
-    private String bankCardCcv;
+    private String bankCardCvc;
 
     public BankCard toBankCard(){
         return BankCard.builder()
                 .bankCardId(this.bankCardId)
                 .bankCardLimit(this.bankCardLimit)
                 .bankCardPassword(this.bankCardPassword)
-                .bankCardCcv(this.bankCardCcv)
+                .bankCardCvc(this.bankCardCvc)
                 .build();
     }
 

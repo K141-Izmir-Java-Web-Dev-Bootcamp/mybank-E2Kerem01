@@ -27,7 +27,7 @@ public class Account {
     private Long accountId;
 
     @Column(name = "amount_of_money")
-    private int balance;
+    private double balance;
 
     @Enumerated(value = EnumType.STRING)
     private AccountType accountType;
@@ -35,7 +35,7 @@ public class Account {
     @Enumerated(value = EnumType.STRING)
     private MoneyType moneyType;
 
-    @Column(unique = true,name = "iban_number")
+    @Column(name = "iban_number")
     private UUID iban;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customers_id",referencedColumnName = "customerId")
@@ -46,6 +46,9 @@ public class Account {
 
     @OneToMany(mappedBy = "account")
     public Set<CreditCard> creditCard;
+
+    @OneToMany(mappedBy = "account")
+    public Set<Transfer> transfers;
 
     public AccountDto toAccountDto() {
         return AccountDto.builder()

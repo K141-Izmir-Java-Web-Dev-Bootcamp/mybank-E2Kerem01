@@ -1,12 +1,15 @@
 package org.kodluyoruz.mybank.service;
 
-import org.kodluyoruz.mybank.controller.dto.bankcard.BankCardDto;
+
 import org.kodluyoruz.mybank.model.BankCard;
 import org.kodluyoruz.mybank.repository.BankCardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -32,5 +35,53 @@ public class BankCardService {
 
     public Optional<BankCard> getBankCard(Long id){
         return bankCardRepository.findById(id);
+    }
+
+    public void withdrawMoneyFromAtm(Long bankCardId, String bankCardPassword, double amount) {
+        BankCard bankCard = bankCardRepository.findByBankCardId(bankCardId);
+
+        if ((!Objects.equals(bankCard.getBankCardPassword(), bankCardPassword))){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Password is wrong.");
+        } else{
+            if (bankCard.getBankCardLimit()<amount){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Amount is bigger than card limit.");
+            }else {
+                bankCard.setBankCardLimit(bankCard.getBankCardLimit()-amount);
+                bankCardRepository.save(bankCard);
+            }
+        }
+
+
+    }
+
+    public void depositMoneyAtAtm(Long bankCardId, String bankCardPassword, double amount) {
+        BankCard bankCard = bankCardRepository.findByBankCardId(bankCardId);
+
+        if ((!Objects.equals(bankCard.getBankCardPassword(), bankCardPassword))){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Password is wrong.");
+        } else{
+            if (amount==0){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Please enter bigger than 0.");
+            }else {
+                bankCard.setBankCardLimit(bankCard.getBankCardLimit()+amount);
+                bankCardRepository.save(bankCard);
+            }
+        }
+    }
+
+
+    public void onlineShoppingProcess(Long bankCardId, String bankCardPassword, String bankCardCvc, double amount) {
+        BankCard bankCard = bankCardRepository.findByBankCardId(bankCardId);
+
+        if ((!Objects.equals(bankCard.getBankCardPassword(), bankCardPassword)) && (!Objects.equals(bankCard.getBankCardCvc(), bankCardCvc))){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Password is wrong.");
+        } else{
+            if (amount==0){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Please enter bigger than 0.");
+            }else {
+                bankCard.setBankCardLimit(bankCard.getBankCardLimit()-amount);
+                bankCardRepository.save(bankCard);
+            }
+        }
     }
 }

@@ -20,16 +20,19 @@ public class CreditCard {
     @Id
     @GeneratedValue
     @Column(name = "creditCard_number", nullable = false)
-    private Long creditCard_id;
+    private Long creditCardId;
 
     @Column(name = "creditCard_limit")
     private double creditCardLimit;
 
-    @Column(name = "creditCard_password")
-    private String CreditCardPassword;
+    @Column(name = "debt")
+    private double amountOfDebt;
 
-    @Column(name = "creditCard_ccv")
-    private String creditCcv;
+    @Column(name = "creditCard_password")
+    private String creditCardPassword;
+
+    @Column(name = "creditCard_cvc")
+    private String creditCardCvc;
 
     @ManyToOne
     @JoinColumn(name = "creditCard_account_id", referencedColumnName = "accountId")
@@ -37,10 +40,11 @@ public class CreditCard {
 
     public CreditCardDto toCreditCardDto(){
         return CreditCardDto.builder()
-                .creditCard_id(this.creditCard_id)
+                .amountOfDebt(this.amountOfDebt)
+                .creditCardId(this.creditCardId)
                 .creditCardLimit(this.creditCardLimit)
-                .creditCardPassword(this.CreditCardPassword)
-                .creditCcv(this.creditCcv)
+                .creditCardPassword(this.creditCardPassword)
+                .creditCardCvc(this.creditCardCvc)
                 .account(this.account.toAccountDto())
                 .build();
     }

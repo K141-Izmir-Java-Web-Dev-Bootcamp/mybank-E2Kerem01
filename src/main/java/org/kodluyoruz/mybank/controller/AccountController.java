@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
@@ -60,7 +61,6 @@ public class AccountController {
                         .balance(account.getBalance())
                         .iban(account.getIban())
                         .moneyType(account.getMoneyType())
-                        //.customer(account.getCustomer().toCustomerDto())
                         .build());
     }
 
@@ -75,13 +75,19 @@ public class AccountController {
                             .balance(account.getBalance())
                             .iban(account.getIban())
                             .moneyType(account.getMoneyType())
-                            //.customer(account.getCustomer().toCustomerDto())
                             .build());
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not fount");
         }
 
     }
+
+    @PostMapping("Remittance/{amount}/{senderIban}/{receiverIban}")
+    public void transferToIban(@PathVariable double amount, @PathVariable UUID senderIban, @PathVariable UUID receiverIban){
+        accountService.transferToIban(amount,senderIban,receiverIban);
+    }
+
+
 
 
 

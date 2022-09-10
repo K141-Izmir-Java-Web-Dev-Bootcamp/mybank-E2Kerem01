@@ -22,12 +22,12 @@ public class BankCard {
     private Long bankCardId;
 
     @Column(name = "bankCard_limit")
-    private int bankCardLimit;
+    private double bankCardLimit;
 
     @Column(name = "bankCard_password")
     private String bankCardPassword;
     @Column(name = "bankCard_Ccv")
-    private String bankCardCcv;
+    private String bankCardCvc;
 
     @OneToOne
     @JoinColumn(name = "bankcard_account_id", referencedColumnName = "accountId")
@@ -38,7 +38,7 @@ public class BankCard {
                 .bankCardId(this.bankCardId)
                 .bankCardLimit(this.bankCardLimit)
                 .bankCardPassword(this.bankCardPassword)
-                .bankCardCcv(this.bankCardCcv)
+                .bankCardCvc(this.bankCardCvc)
                 .build();
 
     }

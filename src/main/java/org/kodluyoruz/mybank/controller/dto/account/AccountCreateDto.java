@@ -19,7 +19,7 @@ public class AccountCreateDto {
 
     private CustomerDto customer;
     private UUID iban;
-    private int balance;
+    private double balance;
     private AccountType accountType;
     private MoneyType moneyType;
 
