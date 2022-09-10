@@ -1,25 +1,31 @@
 package org.kodluyoruz.mybank.controller;
 
-import org.kodluyoruz.mybank.controller.dto.transfer.TransferDto;
+import org.kodluyoruz.mybank.service.AccountService;
 import org.kodluyoruz.mybank.service.TransferService;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/")
 public class TransferController {
 
     private final TransferService transferService;
+    private final AccountService accountService;
 
-    public TransferController(TransferService transferService) {
+    public TransferController(TransferService transferService, AccountService accountService) {
         this.transferService = transferService;
+        this.accountService = accountService;
     }
 
-    /*@PostMapping("bytransfer/{accumulation_account}/{current_account}")
-    @ResponseStatus(HttpStatus.OK)
-    public TransferDto create(@PathVariable String senderIban
-            ,@PathVariable String receicerIban, @PathVariable int amount){
 
+    @PostMapping("Remittance/{amount}/{senderIban}/{receiverIban}")
+    public void transferToIban(@PathVariable double amount, @PathVariable UUID senderIban, @PathVariable UUID receiverIban){
+        transferService.transferToIban(amount,senderIban,receiverIban);
+    }
 
-    }*/
+    @PostMapping("transferBetweenMyAccounts/{iban}/{amount}/{senderAccountType}/{reveiverAccountType}")
+    public void transferBetweenMyAccounts(@PathVariable UUID iban,@PathVariable double amount,@PathVariable String senderAccountType,@PathVariable String reveiverAccountType){
+        transferService.transferBetweenMyAccounts(iban,amount,senderAccountType,reveiverAccountType);
+    }
 }

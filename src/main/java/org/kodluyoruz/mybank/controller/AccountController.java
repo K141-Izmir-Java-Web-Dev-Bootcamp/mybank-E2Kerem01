@@ -82,10 +82,10 @@ public class AccountController {
 
     }
 
-    @PostMapping("Remittance/{amount}/{senderIban}/{receiverIban}")
+    /*@PostMapping("Remittance/{amount}/{senderIban}/{receiverIban}")
     public void transferToIban(@PathVariable double amount, @PathVariable UUID senderIban, @PathVariable UUID receiverIban){
         accountService.transferToIban(amount,senderIban,receiverIban);
-    }
+    }*/
 
 
 

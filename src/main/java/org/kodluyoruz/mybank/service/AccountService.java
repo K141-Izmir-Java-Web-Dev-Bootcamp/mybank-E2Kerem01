@@ -22,7 +22,6 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-
     public Account create(Account account){
         return accountRepository.save(account);
     }
@@ -30,7 +29,6 @@ public class AccountService {
     public void deleteAccount(Long id){
         accountRepository.deleteById(id);
     }
-
 
     public Page<Account> getPagesOfAccount(Pageable pageable) {
         return accountRepository.findAll(pageable);
@@ -40,7 +38,7 @@ public class AccountService {
         return accountRepository.findById(id);
     }
 
-    public void transferToIban(double amount, UUID senderIban, UUID receiverIban){
+    /*public void transferToIban(double amount, UUID senderIban, UUID receiverIban){
 
         Account sendAccount = accountRepository.findByIban(senderIban);
         Account receAccount = accountRepository.findByIban(receiverIban);
@@ -54,7 +52,7 @@ public class AccountService {
             accountRepository.save(receAccount);
 
 
-    }
+    }*/
 
 }
 

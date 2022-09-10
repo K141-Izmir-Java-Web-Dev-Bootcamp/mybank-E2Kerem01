@@ -10,6 +10,9 @@ import java.util.UUID;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Account findByIban(UUID iban);
+    Account findByAccountType(String accountType);
+
+    Account findByAccountTypeAndIban(UUID iban,String accountType);
 
 
 }
