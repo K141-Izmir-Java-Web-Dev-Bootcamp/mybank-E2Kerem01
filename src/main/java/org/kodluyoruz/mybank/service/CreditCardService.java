@@ -90,6 +90,14 @@ public class CreditCardService {
     }
 
 
+    public void upgradeLimit(Long creditCardId, double limit) {
+        CreditCard creditCard = creditCardRepository.findByCreditCardId(creditCardId);
+        if (creditCard.getAmountOfDebt()>creditCard.getCreditCardLimit()){
+            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED, "Password is wrong.");
 
-
+        }else {
+            creditCard.setCreditCardLimit(creditCard.getCreditCardLimit()+(limit/4));
+            creditCardRepository.save(creditCard);
+        }
+    }
 }

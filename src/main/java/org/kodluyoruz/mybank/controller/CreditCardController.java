@@ -93,6 +93,11 @@ public class CreditCardController {
         creditCardService.withdrawMoneyFromAtm(creditCardId,creditCardPassword,amount);
     }
 
+    @PostMapping("upgradeLimit/{creditCardId}/{limit}")
+    public void upgradeLimit(@PathVariable Long creditCardId,@PathVariable double limit){
+        creditCardService.upgradeLimit(creditCardId,limit);
+    }
+
 
     @GetMapping("totalDept/{creditCardId}")
     public Optional<CreditCardDto> totalDept(@PathVariable Long id){
