@@ -1,11 +1,15 @@
 package org.kodluyoruz.mybank.controller.dto.bankcard;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.kodluyoruz.mybank.controller.dto.account.AccountDto;
 import org.kodluyoruz.mybank.model.BankCard;
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BankCardCreateDto {
 
 

@@ -26,7 +26,7 @@ public class BankCardController {
 
     @PostMapping("bankcard")
     @ResponseStatus(HttpStatus.CREATED)
-    private BankCardDto create(@RequestBody BankCardCreateDto bankCardDto){
+    public BankCardDto create(@RequestBody BankCardCreateDto bankCardDto){
         BankCard bankCard = bankCardService.create(bankCardDto.toBankCard());
         return BankCardDto.builder()
                 .bankCardId(bankCard.getBankCardId())

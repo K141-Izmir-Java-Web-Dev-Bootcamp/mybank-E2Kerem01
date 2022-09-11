@@ -24,7 +24,7 @@ public class CreditCardController {
 
     @PostMapping("creditcard")
     @ResponseStatus(HttpStatus.CREATED)
-    private CreditCardDto create(@RequestBody CreditCardCreateDto creditCardCreateDto){
+    public CreditCardDto create(@RequestBody CreditCardCreateDto creditCardCreateDto){
         CreditCard creditCard = creditCardService.create(creditCardCreateDto.toCreditCard());
         return CreditCardDto.builder()
                 .creditCardId(creditCard.getCreditCardId())

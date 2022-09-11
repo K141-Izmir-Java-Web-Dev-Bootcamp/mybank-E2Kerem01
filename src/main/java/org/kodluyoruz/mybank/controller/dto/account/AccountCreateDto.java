@@ -1,7 +1,9 @@
 package org.kodluyoruz.mybank.controller.dto.account;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.kodluyoruz.mybank.controller.dto.customer.CustomerDto;
 import org.kodluyoruz.mybank.model.Account;
 import org.kodluyoruz.mybank.model.BankCard;
@@ -14,6 +16,8 @@ import java.util.UUID;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class AccountCreateDto {
 
 
