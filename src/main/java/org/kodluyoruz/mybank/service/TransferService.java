@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -25,48 +24,105 @@ public class TransferService {
         this.transferRepository = transferRepository;
     }
 
-    public void transferToIban(double amount, UUID senderIban, UUID receiverIban){
+    public void transferToIban(double amount, UUID senderIban, UUID receiverIban) {
 
         Account sendAccount = accountRepository.findByIban(senderIban);
         Account receAccount = accountRepository.findByIban(receiverIban);
 
-        if ((amount > sendAccount.getBalance())&&(senderIban!=receiverIban)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Balance is weak");
-        }else {
-            if(sendAccount.getAccountType()==AccountType.ACCUMULATION_ACCOUNT){
-                sendAccount.setBalance(sendAccount.getBalance()-amount);
-                receAccount.setBalance(receAccount.getBalance()+amount);
-                accountRepository.save(sendAccount);
-                accountRepository.save(receAccount);
-                throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
-            }else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Current account dont send money");
+        if ((amount > sendAccount.getBalance()) && (senderIban != receiverIban)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Balance is weak");
+        } else {
+            if (sendAccount.getAccountType() == AccountType.ACCUMULATION_ACCOUNT) {
+
+                if ((sendAccount.getMoneyType() == MoneyType.TRY) && (receAccount.getMoneyType() == MoneyType.TRY)) {
+                    sendAccount.setBalance(sendAccount.getBalance() - amount);
+                    receAccount.setBalance(receAccount.getBalance() + amount);
+                    accountRepository.save(sendAccount);
+                    accountRepository.save(receAccount);
+                    throw new ResponseStatusException(HttpStatus.OK, "Process is success...");
+
+                } else if ((sendAccount.getMoneyType() == MoneyType.TRY) && (receAccount.getMoneyType() == MoneyType.EUR)) {
+
+                    sendAccount.setBalance(sendAccount.getBalance() - amount);
+                    amount = amount / 18.5;
+                    receAccount.setBalance(receAccount.getBalance() + amount);
+                    accountRepository.save(sendAccount);
+                    accountRepository.save(receAccount);
+                    throw new ResponseStatusException(HttpStatus.OK, "Process is success...");
+
+                } else if ((sendAccount.getMoneyType() == MoneyType.TRY) && (receAccount.getMoneyType() == MoneyType.USD)) {
+
+                    sendAccount.setBalance(sendAccount.getBalance() - amount);
+                    amount = amount / 18;
+                    receAccount.setBalance(receAccount.getBalance() + amount);
+                    accountRepository.save(sendAccount);
+                    accountRepository.save(receAccount);
+                    throw new ResponseStatusException(HttpStatus.OK, "Process is success...");
+
+                }
+
+                // Eur
+
+                else if ((sendAccount.getMoneyType() == MoneyType.EUR) && (receAccount.getMoneyType() == MoneyType.TRY)) {
+
+                    sendAccount.setBalance(sendAccount.getBalance() - amount);
+                    amount = amount * 18.5;
+                    receAccount.setBalance(receAccount.getBalance() + amount);
+                    accountRepository.save(sendAccount);
+                    accountRepository.save(receAccount);
+                    throw new ResponseStatusException(HttpStatus.OK, "Process is success...");
+
+                } else if ((sendAccount.getMoneyType() == MoneyType.EUR) && (receAccount.getMoneyType() == MoneyType.USD)) {
+
+                    sendAccount.setBalance(sendAccount.getBalance() - amount);
+                    amount = amount + (amount * 1.05);
+                    receAccount.setBalance(receAccount.getBalance() + amount);
+                    accountRepository.save(sendAccount);
+                    accountRepository.save(receAccount);
+                    throw new ResponseStatusException(HttpStatus.OK, "Process is success...");
+
+                } else if ((sendAccount.getMoneyType() == MoneyType.EUR) && (receAccount.getMoneyType() == MoneyType.EUR)) {
+
+                    sendAccount.setBalance(sendAccount.getBalance() - amount);
+                    receAccount.setBalance(receAccount.getBalance() + amount);
+                    accountRepository.save(sendAccount);
+                    accountRepository.save(receAccount);
+                    throw new ResponseStatusException(HttpStatus.OK, "Process is success...");
+
+
+
+
+                } else if ((sendAccount.getMoneyType() == MoneyType.USD) && (receAccount.getMoneyType() == MoneyType.TRY)) {
+
+                    sendAccount.setBalance(sendAccount.getBalance() - amount);
+                    amount = amount * 18;
+                    receAccount.setBalance(receAccount.getBalance() + amount);
+                    accountRepository.save(sendAccount);
+                    accountRepository.save(receAccount);
+                    throw new ResponseStatusException(HttpStatus.OK, "Process is success...");
+
+                } else if ((sendAccount.getMoneyType() == MoneyType.USD) && (receAccount.getMoneyType() == MoneyType.EUR)) {
+
+                    sendAccount.setBalance(sendAccount.getBalance() - amount);
+                    amount = amount - (amount * 1.05);
+                    receAccount.setBalance(receAccount.getBalance() + amount);
+                    accountRepository.save(sendAccount);
+                    accountRepository.save(receAccount);
+                    throw new ResponseStatusException(HttpStatus.OK, "Process is success...");
+
+                } else if ((sendAccount.getMoneyType() == MoneyType.USD) && (receAccount.getMoneyType() == MoneyType.USD)) {
+
+                    sendAccount.setBalance(sendAccount.getBalance() - amount);
+                    receAccount.setBalance(receAccount.getBalance() + amount);
+                    accountRepository.save(sendAccount);
+                    accountRepository.save(receAccount);
+                    throw new ResponseStatusException(HttpStatus.OK, "Process is success...");
+
+                }
+                else {
+                    throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED, "Current account dont send money");
+                }
             }
         }
-
-
     }
-
-    /*public void transferBetweenMyAccounts(Long account1, Long account2, double amount) {
-
-        Account sendAccount = accountRepository.findByAccountId(account1);
-        Account receAccount = accountRepository.findByAccountId(account2);
-
-
-        if ((sendAccount.getBalance()<0)&&(sendAccount.getBalance()>amount)){
-
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Balance is weak");
-        }
-            else {
-
-                sendAccount.setBalance(sendAccount.getBalance()-amount);
-                receAccount.setBalance(receAccount.getBalance()+amount);
-                accountRepository.save(sendAccount);
-                accountRepository.save(receAccount);
-
-            }
-        }*/
-
-
-
 }
