@@ -34,21 +34,28 @@ public class CustomerService {
     public void deleteCustomer(Long id){
 
         Account account = accountRepository.findByCustomer_CustomerId(id);
-        if (account.getAccountId() == null){
+        if (account==null){
             customerRepository.deleteById(id);
+            throw new ResponseStatusException(HttpStatus.OK,"delete this customer.");
+        }
+        if (account.getBalance()>0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cant delete this customer.");
         }else {
             CreditCard creditCard = creditCardRepository.findByAccount_AccountId(account.getAccountId());
-            if (account.getBalance()>0 || creditCard.getAmountOfDebt()>0){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cant delete this customer.");
-
-            }else {
-                creditCardRepository.deleteById(creditCard.getCreditCardId());
+            if (creditCard==null){
                 accountRepository.deleteById(account.getAccountId());
                 customerRepository.deleteById(id);
+                throw new ResponseStatusException(HttpStatus.OK,"delete this customer.");
+            }else {
+                if (creditCard.getAmountOfDebt()>0){
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cant delete this customer.");
+                }else {
+                    creditCardRepository.deleteById(creditCard.getCreditCardId());
+                    accountRepository.deleteById(account.getAccountId());
+                    customerRepository.deleteById(id);
+                }
             }
         }
-
-
     }
 
     public Page<Customer> getPagesOfCustomer(Pageable pageable){
