@@ -88,6 +88,12 @@ public class CreditCardController {
         creditCardService.depositMoneyAtAtm(creditCardId,creditCardPassword,amount);
     }
 
+    @PostMapping("withdrawFromAtm/{creditCardId}/{creditCardPassword}/{amount}")
+    public void withdrawMoneyFromAtm(@PathVariable Long creditCardId,@PathVariable String creditCardPassword,@PathVariable double amount){
+        creditCardService.withdrawMoneyFromAtm(creditCardId,creditCardPassword,amount);
+    }
+
+
     @GetMapping("totalDept/{creditCardId}")
     public Optional<CreditCardDto> totalDept(@PathVariable Long id){
         try {

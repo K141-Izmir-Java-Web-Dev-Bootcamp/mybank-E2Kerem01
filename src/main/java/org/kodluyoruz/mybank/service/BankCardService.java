@@ -76,7 +76,7 @@ public class BankCardService {
         if ((!Objects.equals(bankCard.getBankCardPassword(), bankCardPassword)) && (!Objects.equals(bankCard.getBankCardCvc(), bankCardCvc))){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Password is wrong.");
         } else{
-            if (amount==0){
+            if (amount==0 || bankCard.getBankCardLimit()<amount){
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Please enter bigger than 0.");
             }else {
                 bankCard.setBankCardLimit(bankCard.getBankCardLimit()-amount);

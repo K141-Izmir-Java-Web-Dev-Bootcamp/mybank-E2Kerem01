@@ -1,6 +1,5 @@
 package org.kodluyoruz.mybank.service;
 
-import org.kodluyoruz.mybank.controller.dto.creditcard.CreditCardDto;
 import org.kodluyoruz.mybank.model.BankCard;
 import org.kodluyoruz.mybank.model.CreditCard;
 import org.kodluyoruz.mybank.repository.CreditCardRepository;
@@ -9,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.Objects;
 import java.util.Optional;
 
@@ -37,6 +35,7 @@ public class CreditCardService {
     public Optional<CreditCard> getCreditCard(Long id){
         return creditCardRepository.findById(id);
     }
+
     public void onlineShoppingProcess(Long creditCardId, String creditCardPassword, String creditCardCvc, double amount) {
 
         CreditCard creditCard = creditCardRepository.findByCreditCardId(creditCardId);
@@ -52,7 +51,6 @@ public class CreditCardService {
                 creditCardRepository.save(creditCard);
             }
         }
-
     }
 
     public void depositMoneyAtAtm(Long creditCardId, String creditCardPassword, double amount) {
@@ -72,6 +70,26 @@ public class CreditCardService {
             }
         }
     }
+
+
+    public void withdrawMoneyFromAtm(Long creditCardId, String creditCardPassword, double amount) {
+
+        CreditCard creditCard = creditCardRepository.findByCreditCardId(creditCardId);
+
+        if (creditCard.getCreditCardPassword() != creditCardPassword) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Password is wrong.");
+        } else {
+
+            if (creditCard.getCreditCardLimit() < 0 || creditCard.getCreditCardLimit()<amount) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Amount is bigger than card limit.");
+            } else {
+                creditCard.setCreditCardLimit(creditCard.getCreditCardLimit() - amount);
+                creditCardRepository.save(creditCard);
+            }
+        }
+    }
+
+
 
 
 }
