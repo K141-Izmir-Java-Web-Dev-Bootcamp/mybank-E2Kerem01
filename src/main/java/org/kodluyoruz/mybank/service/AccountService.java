@@ -27,7 +27,15 @@ public class AccountService {
     }
 
     public void deleteAccount(Long id){
-        accountRepository.deleteById(id);
+
+        Account account = accountRepository.findByAccountId(id);
+        if (account.getBalance()>0){
+            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED,"Cant Delete..");
+        }else {
+            accountRepository.deleteById(id);
+            throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
+        }
+
     }
 
     public Page<Account> getPagesOfAccount(Pageable pageable) {
@@ -36,16 +44,18 @@ public class AccountService {
 
     public Optional<Account> getAccount(Long id) {
         return accountRepository.findById(id);
+
     }
 
     public void withdrawMoneyWithQrCode(Long accountId, double amount) {
         Boolean qr = true;
         Account account = accountRepository.findByAccountId(accountId);
         if (qr == Boolean.FALSE){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Password is wrong.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"You have " + account.getBalance() + ", you cant delete it");
         }else {
             account.setBalance(account.getBalance()-amount);
             accountRepository.save(account);
+            throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
         }
 
     }

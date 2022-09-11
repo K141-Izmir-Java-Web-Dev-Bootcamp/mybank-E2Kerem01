@@ -49,6 +49,7 @@ public class CreditCardService {
                 creditCard.setCreditCardLimit(creditCard.getCreditCardLimit()-amount);
                 creditCard.setAmountOfDebt(creditCard.getAmountOfDebt()+amount);
                 creditCardRepository.save(creditCard);
+                throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
             }
         }
     }
@@ -66,6 +67,7 @@ public class CreditCardService {
                 creditCard.setAmountOfDebt(creditCard.getAmountOfDebt()-amount);
                 creditCard.setCreditCardLimit(creditCard.getCreditCardLimit()+amount);
                 creditCardRepository.save(creditCard);
+                throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
 
             }
         }
@@ -85,6 +87,7 @@ public class CreditCardService {
             } else {
                 creditCard.setCreditCardLimit(creditCard.getCreditCardLimit() - amount);
                 creditCardRepository.save(creditCard);
+                throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
             }
         }
     }
@@ -98,6 +101,7 @@ public class CreditCardService {
         }else {
             creditCard.setCreditCardLimit(creditCard.getCreditCardLimit()+(limit/4));
             creditCardRepository.save(creditCard);
+            throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
         }
     }
 }

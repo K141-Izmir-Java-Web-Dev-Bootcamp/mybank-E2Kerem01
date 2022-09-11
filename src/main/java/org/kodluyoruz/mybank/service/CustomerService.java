@@ -53,6 +53,7 @@ public class CustomerService {
                     creditCardRepository.deleteById(creditCard.getCreditCardId());
                     accountRepository.deleteById(account.getAccountId());
                     customerRepository.deleteById(id);
+                    throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
                 }
             }
         }

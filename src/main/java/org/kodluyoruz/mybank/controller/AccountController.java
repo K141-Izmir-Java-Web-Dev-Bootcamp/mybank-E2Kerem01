@@ -43,13 +43,7 @@ public class AccountController {
     @DeleteMapping("account/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAccount(@PathVariable Long id){
-        try {
             accountService.deleteAccount(id);
-        }catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not fount");
-        }
-
-
     }
 
     @GetMapping("accounts")

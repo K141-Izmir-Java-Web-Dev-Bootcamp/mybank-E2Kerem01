@@ -48,6 +48,7 @@ public class BankCardService {
             }else {
                 bankCard.setBankCardLimit(bankCard.getBankCardLimit()-amount);
                 bankCardRepository.save(bankCard);
+                throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
             }
         }
 
@@ -65,6 +66,7 @@ public class BankCardService {
             }else {
                 bankCard.setBankCardLimit(bankCard.getBankCardLimit()+amount);
                 bankCardRepository.save(bankCard);
+                throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
             }
         }
     }
@@ -81,6 +83,7 @@ public class BankCardService {
             }else {
                 bankCard.setBankCardLimit(bankCard.getBankCardLimit()-amount);
                 bankCardRepository.save(bankCard);
+                throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
             }
         }
     }

@@ -38,6 +38,7 @@ public class TransferService {
                 receAccount.setBalance(receAccount.getBalance()+amount);
                 accountRepository.save(sendAccount);
                 accountRepository.save(receAccount);
+                throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
             }else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Current account dont send money");
             }
