@@ -19,13 +19,14 @@ public class TransferController {
     }
 
 
-    @PostMapping("Remittance/{amount}/{senderIban}/{receiverIban}")
+    @PostMapping("RemittanceEft/{amount}/{senderIban}/{receiverIban}")
     public void transferToIban(@PathVariable double amount, @PathVariable UUID senderIban, @PathVariable UUID receiverIban){
         transferService.transferToIban(amount,senderIban,receiverIban);
     }
 
-    @PostMapping("transferBetweenMyAccounts/{iban}/{amount}/{senderAccountType}/{reveiverAccountType}")
-    public void transferBetweenMyAccounts(@PathVariable UUID iban,@PathVariable double amount,@PathVariable String senderAccountType,@PathVariable String reveiverAccountType){
-        transferService.transferBetweenMyAccounts(iban,amount,senderAccountType,reveiverAccountType);
-    }
+    /*@PostMapping("transferBetweenMyAccounts/{account1}/{account2}/{amount}")
+    public void transferBetweenMyAccounts(@PathVariable Long account1, @PathVariable Long account2, @PathVariable double amount){
+        transferService.transferBetweenMyAccounts(account1,account2,amount);
+
+    }*/
 }

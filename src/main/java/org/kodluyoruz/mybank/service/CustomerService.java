@@ -1,6 +1,10 @@
 package org.kodluyoruz.mybank.service;
 
+import org.kodluyoruz.mybank.model.Account;
+import org.kodluyoruz.mybank.model.CreditCard;
 import org.kodluyoruz.mybank.model.Customer;
+import org.kodluyoruz.mybank.repository.AccountRepository;
+import org.kodluyoruz.mybank.repository.CreditCardRepository;
 import org.kodluyoruz.mybank.repository.CustomerRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,17 +18,37 @@ import java.util.Optional;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final CreditCardRepository creditCardRepository;
+    private final AccountRepository accountRepository;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, CreditCardRepository creditCardRepository, AccountRepository accountRepository) {
         this.customerRepository = customerRepository;
+        this.creditCardRepository = creditCardRepository;
+        this.accountRepository = accountRepository;
     }
 
     public Customer create(Customer customer){
         return customerRepository.save(customer);
     }
 
-    public void deleteById(Long id){
-        customerRepository.deleteById(id);
+    public void deleteCustomer(Long id){
+
+        Account account = accountRepository.findByCustomer_CustomerId(id);
+        if (account.getAccountId() == null){
+            customerRepository.deleteById(id);
+        }else {
+            CreditCard creditCard = creditCardRepository.findByAccount_AccountId(account.getAccountId());
+            if (account.getBalance()>0 || creditCard.getAmountOfDebt()>0){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cant delete this customer.");
+
+            }else {
+                creditCardRepository.deleteById(creditCard.getCreditCardId());
+                accountRepository.deleteById(account.getAccountId());
+                customerRepository.deleteById(id);
+            }
+        }
+
+
     }
 
     public Page<Customer> getPagesOfCustomer(Pageable pageable){

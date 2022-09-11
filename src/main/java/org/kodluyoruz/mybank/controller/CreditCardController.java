@@ -83,6 +83,11 @@ public class CreditCardController {
         creditCardService.onlineShoppingProcess(creditCardId,creditCardPassword,creditCardCvc,amount);
     }
 
+    @PostMapping("depositMoneyAtAtm/{creditCardId}/{creditCardPassword}/{amount}")
+    public void depositMoneyAtAtm(@PathVariable Long creditCardId,@PathVariable String creditCardPassword,@PathVariable double amount){
+        creditCardService.depositMoneyAtAtm(creditCardId,creditCardPassword,amount);
+    }
+
     @GetMapping("totalDept/{creditCardId}")
     public Optional<CreditCardDto> totalDept(@PathVariable Long id){
         try {

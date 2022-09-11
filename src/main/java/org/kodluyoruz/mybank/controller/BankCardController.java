@@ -36,19 +36,19 @@ public class BankCardController {
                 .build();
     }
 
-    @PostMapping("withdrawMoneyFromAtm/{bankCardId}/{bankCardPassword}/{amount}")
-    public void withdrawMoneyFromAtm(@PathVariable Long bankCardId,@PathVariable String bankCardPassword,@PathVariable double amount){
-        bankCardService.withdrawMoneyFromAtm(bankCardId,bankCardPassword,amount);
+    @PostMapping("withdrawMoneyBankCardFromAtm/{bankCardId}/{bankCardPassword}/{amount}")
+    public void withdrawMoneyBankCardFromAtm(@PathVariable Long bankCardId,@PathVariable String bankCardPassword,@PathVariable double amount){
+        bankCardService.withdrawMoneyBankCardFromAtm(bankCardId,bankCardPassword,amount);
     }
 
-    @PostMapping("depositMoneyAtAtm/{bankCardId}/{bankCardPassword}/{amount}")
-    public void depositMoneyAtAtm(@PathVariable Long bankCardId,@PathVariable String bankCardPassword,@PathVariable double amount){
-        bankCardService.depositMoneyAtAtm(bankCardId,bankCardPassword,amount);
+    @PostMapping("depositMoneyBankCardAtAtm/{bankCardId}/{bankCardPassword}/{amount}")
+    public void depositMoneyBankCardAtAtm(@PathVariable Long bankCardId,@PathVariable String bankCardPassword,@PathVariable double amount){
+        bankCardService.depositMoneyBankCardAtAtm(bankCardId,bankCardPassword,amount);
     }
 
-    @PostMapping("onlineShoppingProcess/{bankCardId}/{bankCardPassword}/{bankCardCvc}/{amount}")
-    public void onlineShoppingProcess(@PathVariable Long bankCardId,@PathVariable String bankCardPassword,@PathVariable String bankCardCvc,@PathVariable double amount){
-        bankCardService.onlineShoppingProcess(bankCardId,bankCardPassword,bankCardCvc,amount);
+    @PostMapping("onlineShoppingBankCard/{bankCardId}/{bankCardPassword}/{bankCardCvc}/{amount}")
+    public void onlineShoppingBankCard(@PathVariable Long bankCardId,@PathVariable String bankCardPassword,@PathVariable String bankCardCvc,@PathVariable double amount){
+        bankCardService.onlineShoppingBankCard(bankCardId,bankCardPassword,bankCardCvc,amount);
     }
 
 

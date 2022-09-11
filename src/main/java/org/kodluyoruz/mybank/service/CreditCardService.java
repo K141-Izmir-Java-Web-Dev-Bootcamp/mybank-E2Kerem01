@@ -49,9 +49,28 @@ public class CreditCardService {
             }else {
                 creditCard.setCreditCardLimit(creditCard.getCreditCardLimit()-amount);
                 creditCard.setAmountOfDebt(creditCard.getAmountOfDebt()+amount);
+                creditCardRepository.save(creditCard);
             }
         }
 
+    }
+
+    public void depositMoneyAtAtm(Long creditCardId, String creditCardPassword, double amount) {
+
+        CreditCard creditCard = creditCardRepository.findByCreditCardId(creditCardId);
+
+        if ((!Objects.equals(creditCard.getCreditCardPassword(), creditCardPassword))){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Password is wrong.");
+        } else{
+            if (amount==0){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Please enter bigger than 0.");
+            }else {
+                creditCard.setAmountOfDebt(creditCard.getAmountOfDebt()-amount);
+                creditCard.setCreditCardLimit(creditCard.getCreditCardLimit()+amount);
+                creditCardRepository.save(creditCard);
+
+            }
+        }
     }
 
 

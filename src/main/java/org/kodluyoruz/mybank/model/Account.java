@@ -10,6 +10,7 @@ import org.kodluyoruz.mybank.utilities.money.type.MoneyType;
 import org.kodluyoruz.mybank.utilities.type.of.account.AccountType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 import java.util.UUID;
 
@@ -27,15 +28,16 @@ public class Account {
     private Long accountId;
 
     @Column(name = "amount_of_money")
+    @NotBlank
     private double balance;
 
     @Enumerated(value = EnumType.STRING)
     private AccountType accountType;
 
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(value =EnumType.STRING)
     private MoneyType moneyType;
 
-    @Column(name = "iban_number")
+    @Column(unique = true,name = "iban_number")
     private UUID iban;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customers_id",referencedColumnName = "customerId")

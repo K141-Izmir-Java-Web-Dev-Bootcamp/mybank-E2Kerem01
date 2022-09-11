@@ -38,6 +38,18 @@ public class AccountService {
         return accountRepository.findById(id);
     }
 
+    public void withdrawMoneyWithQrCode(Long accountId, double amount) {
+        Boolean qr = true;
+        Account account = accountRepository.findByAccountId(accountId);
+        if (qr == Boolean.FALSE){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Password is wrong.");
+        }else {
+            account.setBalance(account.getBalance()-amount);
+            accountRepository.save(account);
+        }
+
+    }
+
     /*public void transferToIban(double amount, UUID senderIban, UUID receiverIban){
 
         Account sendAccount = accountRepository.findByIban(senderIban);

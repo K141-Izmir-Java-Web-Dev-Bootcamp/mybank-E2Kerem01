@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.kodluyoruz.mybank.controller.dto.creditcard.CreditCardDto;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @Builder
@@ -29,9 +30,11 @@ public class CreditCard {
     private double amountOfDebt;
 
     @Column(name = "creditCard_password")
+    @NotBlank
     private String creditCardPassword;
 
     @Column(name = "creditCard_cvc")
+    @NotBlank
     private String creditCardCvc;
 
     @ManyToOne

@@ -37,7 +37,7 @@ public class BankCardService {
         return bankCardRepository.findById(id);
     }
 
-    public void withdrawMoneyFromAtm(Long bankCardId, String bankCardPassword, double amount) {
+    public void withdrawMoneyBankCardFromAtm(Long bankCardId, String bankCardPassword, double amount) {
         BankCard bankCard = bankCardRepository.findByBankCardId(bankCardId);
 
         if ((!Objects.equals(bankCard.getBankCardPassword(), bankCardPassword))){
@@ -54,7 +54,7 @@ public class BankCardService {
 
     }
 
-    public void depositMoneyAtAtm(Long bankCardId, String bankCardPassword, double amount) {
+    public void depositMoneyBankCardAtAtm(Long bankCardId, String bankCardPassword, double amount) {
         BankCard bankCard = bankCardRepository.findByBankCardId(bankCardId);
 
         if ((!Objects.equals(bankCard.getBankCardPassword(), bankCardPassword))){
@@ -70,7 +70,7 @@ public class BankCardService {
     }
 
 
-    public void onlineShoppingProcess(Long bankCardId, String bankCardPassword, String bankCardCvc, double amount) {
+    public void onlineShoppingBankCard(Long bankCardId, String bankCardPassword, String bankCardCvc, double amount) {
         BankCard bankCard = bankCardRepository.findByBankCardId(bankCardId);
 
         if ((!Objects.equals(bankCard.getBankCardPassword(), bankCardPassword)) && (!Objects.equals(bankCard.getBankCardCvc(), bankCardCvc))){

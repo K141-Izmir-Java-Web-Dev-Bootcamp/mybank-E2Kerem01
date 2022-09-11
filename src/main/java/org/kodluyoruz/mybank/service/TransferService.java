@@ -3,11 +3,13 @@ package org.kodluyoruz.mybank.service;
 import org.kodluyoruz.mybank.model.Account;
 import org.kodluyoruz.mybank.repository.AccountRepository;
 import org.kodluyoruz.mybank.repository.TransferRepository;
+import org.kodluyoruz.mybank.utilities.money.type.MoneyType;
 import org.kodluyoruz.mybank.utilities.type.of.account.AccountType;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -44,26 +46,26 @@ public class TransferService {
 
     }
 
-    public void transferBetweenMyAccounts(UUID iban, double amount, String senderAccountType,String reveiverAccountType) {
+    /*public void transferBetweenMyAccounts(Long account1, Long account2, double amount) {
+
+        Account sendAccount = accountRepository.findByAccountId(account1);
+        Account receAccount = accountRepository.findByAccountId(account2);
 
 
-        Account sendAccountType = accountRepository.findByAccountTypeAndIban(iban,senderAccountType);
-        Account receAccountType = accountRepository.findByAccountTypeAndIban(iban,reveiverAccountType);
+        if ((sendAccount.getBalance()<0)&&(sendAccount.getBalance()>amount)){
 
-        if (sendAccountType.getAccountType().getType()==2){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Balance is weak");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Balance is weak");
         }
-        else {
-
-            if ((sendAccountType.getBalance()<0)&&(sendAccountType.getBalance()>amount)){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Balance is weak");
-            }
             else {
-                sendAccountType.setBalance(sendAccountType.getBalance()-amount);
-                receAccountType.setBalance(receAccountType.getBalance()+amount);
+
+                sendAccount.setBalance(sendAccount.getBalance()-amount);
+                receAccount.setBalance(receAccount.getBalance()+amount);
+                accountRepository.save(sendAccount);
+                accountRepository.save(receAccount);
+
             }
-        }
+        }*/
 
 
-    }
+
 }

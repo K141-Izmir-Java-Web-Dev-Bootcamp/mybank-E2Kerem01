@@ -3,15 +3,8 @@ package org.kodluyoruz.mybank.utilities.type.of.account;
 
 public enum AccountType {
 
-        ACCUMULATION_ACCOUNT(1), CURRENT_ACCOUNT(2);
-        private int type;
-        AccountType(int type){
-            this.type = type;
-        }
+        ACCUMULATION_ACCOUNT, CURRENT_ACCOUNT;
 
-        public int getType(){
-            return this.type;
-        }
 }
 
 
