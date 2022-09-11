@@ -81,6 +81,11 @@ public class AccountController {
         accountService.withdrawMoneyWithQrCode(accountId,amount);
     }
 
+    @PostMapping("depositMoneyWithQrCode/{accountId}/{amount}")
+    public void depositMoneyWithQrCode(@PathVariable Long accountId,@PathVariable double amount){
+        accountService.depositMoneyWithQrCode(accountId,amount);
+    }
+
     /*@PostMapping("Remittance/{amount}/{senderIban}/{receiverIban}")
     public void transferToIban(@PathVariable double amount, @PathVariable UUID senderIban, @PathVariable UUID receiverIban){
         accountService.transferToIban(amount,senderIban,receiverIban);

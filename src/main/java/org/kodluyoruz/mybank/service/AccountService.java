@@ -51,13 +51,25 @@ public class AccountService {
         Boolean qr = true;
         Account account = accountRepository.findByAccountId(accountId);
         if (qr == Boolean.FALSE){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"You have " + account.getBalance() + ", you cant delete it");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Qr code is wrong");
         }else {
             account.setBalance(account.getBalance()-amount);
             accountRepository.save(account);
             throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
         }
 
+    }
+
+    public void depositMoneyWithQrCode(Long accountId, double amount) {
+        Boolean qr = true;
+        Account account = accountRepository.findByAccountId(accountId);
+        if (qr == Boolean.FALSE){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Qr code is wrong");
+        }else {
+            account.setBalance(account.getBalance()+amount);
+            accountRepository.save(account);
+            throw new ResponseStatusException(HttpStatus.OK,"Process is success...");
+        }
     }
 
     /*public void transferToIban(double amount, UUID senderIban, UUID receiverIban){
